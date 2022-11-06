@@ -13,9 +13,31 @@ const commitStyle = {
 
 }
 
+
+
 function App() {
   const [key, setKey] = useState('');
   const [list, setList] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+  const [count, setCount] = useState(30)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      if(count == 0){
+        getCommits(key);
+        setCount(30);
+      } else{
+        setCount(count - 1);
+      }
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [count])
+
+  const handleRefresh = () => {
+    setRefresh(!refresh);
+    setCount(30);
+  }
+
 
   // To fetch latest commits of the repo
 
@@ -32,7 +54,7 @@ function App() {
   useEffect(() => {
     const getAuthKey =  localStorage.getItem('authKey');
     if(getAuthKey) getCommits(getAuthKey);
-  }, [])
+  }, [refresh])
 
 
   console.log({ list })
@@ -55,6 +77,8 @@ function App() {
         />
         <input type="submit" value="Submit" />
       </form>
+      <button onClick={handleRefresh}>Refresh</button>
+      <h1>{count}</h1>
       {list.length ? 
       list.map((commit, i) => {
         return (
