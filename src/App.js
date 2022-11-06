@@ -1,23 +1,27 @@
-import logo from './logo.svg';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
 function App() {
+  const [key, setKey] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(key);
+    localStorage.setItem('authKey', key);
+    setKey('');
+  };
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="password"
+          value={key}
+          onChange={(e) => { setKey(e.target.value) }}
+          placeholder='Enter Github auth key'
+        />
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   );
 }
