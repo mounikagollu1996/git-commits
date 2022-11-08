@@ -9,7 +9,6 @@ const Counter = (props) => {
   // Implementation of count down timer to auto refresh the commits
 
   useEffect(() => {
-    console.log(12);
     if (authtoken) {
       const timer = setInterval(() => {
         if (count == 0) {

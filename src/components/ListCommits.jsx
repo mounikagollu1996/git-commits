@@ -13,9 +13,7 @@ const commitStyle = {
 
 
 const ListCommits = (props) => {
-
     const { list } = props
-    // console.log(props);
 
     return (
         <>
