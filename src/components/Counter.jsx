@@ -7,7 +7,6 @@ const Counter = (props) => {
   const { getCommits, authtoken, list, refresh } = props;
 
   // Implementation of count down timer to auto refresh the commits
-
   useEffect(() => {
     if (authtoken) {
       const timer = setInterval(() => {
@@ -21,7 +20,9 @@ const Counter = (props) => {
       return () => clearInterval(timer);
     };
   }, [count, list])
+  
 
+  // Reseting counter by clicking on refresh button
   useEffect(() => {
     setCount(30);
   }, [refresh])

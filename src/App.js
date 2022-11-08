@@ -13,7 +13,7 @@ function App() {
   const [list, setList] = useState([]);
   const [refresh, setRefresh] = useState(false);
 
-
+  // handling refresh button
   const handleRefresh = (e) => {
     setRefresh(!refresh);
   }
@@ -23,7 +23,6 @@ function App() {
   };
 
   // To fetch latest commits of the repo
-
   const getCommits = async (authKey) => {
     const octokit = new Octokit({ auth: authKey });
     const owner = 'mounikagollu1996', repo = 'git-commits';
@@ -33,6 +32,7 @@ function App() {
     setList(getCommits.data)
   };
 
+  // Getting authkey from browser after reload the page to persist the data
   useEffect(() => {
     const getAuthKey = localStorage.getItem('authKey');
     console.log({ getAuthKey });
