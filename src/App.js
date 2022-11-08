@@ -1,43 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Octokit } from "@octokit/core";
 
+import Counter from './components/Counter';
 import './App.css';
+import ListCommits from './components/ListCommits';
 
-const commitStyle = {
-  border: '1px solid ',
-  margin: '16px auto',
-  padding: '4px 8px',
-  width: '400px',
-  boxShadow:'5px 10px #888888',
-  textAlign: 'start'
 
-}
 
 
 
 function App() {
-  const [key, setKey] = useState('');
+  const [authtoken, setAuthtoken] = useState('');
   const [list, setList] = useState([]);
   const [refresh, setRefresh] = useState(false);
-  const [count, setCount] = useState(30)
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      if(count == 0){
-        getCommits(key);
-        setCount(30);
-      } else{
-        setCount(count - 1);
-      }
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [count])
 
-  const handleRefresh = () => {
+  const handleRefresh = (e) => {
+
     setRefresh(!refresh);
-    setCount(30);
+    // setCount(30);
   }
-
 
   // To fetch latest commits of the repo
 
@@ -52,42 +34,45 @@ function App() {
 
 
   useEffect(() => {
-    const getAuthKey =  localStorage.getItem('authKey');
-    if(getAuthKey) getCommits(getAuthKey);
+    const getAuthKey = localStorage.getItem('authKey');
+    console.log({ getAuthKey });
+    if (getAuthKey) {
+      getCommits(getAuthKey);
+    }
   }, [refresh])
 
 
-  console.log({ list })
+  // console.log({ list })
+  // console.count();
+  // console.log({key});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    localStorage.setItem('authKey', key);
-    setKey('');
-    getCommits(key)
+    // e.stopPropagation();
+    console.log(50);
+    localStorage.setItem('authKey', authtoken);
+    setAuthtoken('');
+    getCommits(authtoken)
   };
+  // console.log(localStorage.getItem('authKey'), 57);
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='App-form'>
         <input
+          className='App-input'
           type="password"
-          value={key}
-          onChange={(e) => { setKey(e.target.value) }}
+          value={authtoken}
+          onChange={(e) => { setAuthtoken(e.target.value) }}
           placeholder='Enter Github auth key'
         />
-        <input type="submit" value="Submit" />
+        <div className='App-button-row'>
+          <input type="submit" value="Submit" />
+        </div>
       </form>
       <button onClick={handleRefresh}>Refresh</button>
-      <h1>{count}</h1>
-      {list.length ? 
-      list.map((commit, i) => {
-        return (
-          <div key={i} style={commitStyle}>
-            <h4>{commit.commit.message}</h4>
-            <p>{`${new Date(commit.commit.author.date).toLocaleString()} by ${commit.commit.author.name}`}</p>
-          </div>
-        )
-      }) : null}
+      <Counter list={list} authtoken={authtoken || localStorage.getItem('authKey')} getCommits={getCommits} refresh={refresh} />
+      <ListCommits list={list} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  margin: 5rem auto;
 }
 
 .App-logo {
@@ -23,7 +24,15 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.App-form {
+  max-width: 400px;
+  margin: auto;
+}
+.App-input {
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+}
 .App-link {
   color: #61dafb;
 }
