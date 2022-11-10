@@ -2,11 +2,16 @@ import React from 'react';
 
 
 const Button = (props) => {
-    const { handleRefresh } = props;
+    const { handleClick, buttonName, disabled, className } = props;
 
     return(
         <>
-            <button onClick={handleRefresh}>Refresh</button>
+            <button 
+                className={className}
+                onClick={handleClick}
+                disabled={disabled}
+            >{buttonName}
+            </button>
         </>
     )
 }

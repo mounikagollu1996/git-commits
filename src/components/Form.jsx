@@ -13,9 +13,9 @@ const Form = (props) => {
                     onChange={handleChange}
                     placeholder='Enter Github auth key'
                 />
-                <div className='App-button-row'>
-                    <input type="submit" value="Submit" />
-                </div>
+                {/* <div className='App-button-row'> */}
+                    <input type="submit" className='App-button-row' value="Get Commits" />
+                {/* </div> */}
             </form>
         </>
     )

@@ -20,7 +20,7 @@ const Counter = (props) => {
       return () => clearInterval(timer);
     };
   }, [count, list])
-  
+
 
   // Reseting counter by clicking on refresh button
   useEffect(() => {
@@ -30,7 +30,7 @@ const Counter = (props) => {
   return (
     <>
       {list.length ?
-        <h1>{count}</h1> : null
+        <p>Auto refresh in <strong>{count}</strong> seconds...</p> : null
       }
     </>
   )

@@ -24,19 +24,56 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-.App-form {
+.App-box {
+  border-radius: 4px;
+  border: 1px solid #cdcdcd;
+  box-shadow: 0 2px 4px 0 #c8c8c8;
   max-width: 400px;
+  padding: 1rem;
   margin: auto;
 }
+.App-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .App-input {
-  width: 100%;
-  padding: 1rem;
+  padding: 0.6rem;
+  width: 60%;
+  height: fit-content;
   font-size: 1rem;
 }
 .App-link {
   color: #61dafb;
 }
+.App-button-row {
+  width: auto;
+  display: block;
+  padding: 0.6rem;
+  background: green;
+  box-shadow: none;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+}
 
+.App-reload {
+  width: 100px;
+  display: block;
+  padding: 0.6rem;
+  background-color: #008CBA;
+  box-shadow: none;
+  border: none;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  margin: 16px auto;
+}
+
+/* .App-refresh {
+
+} */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -12,6 +12,34 @@ function App() {
   const [authtoken, setAuthtoken] = useState('');
   const [list, setList] = useState([]);
   const [refresh, setRefresh] = useState(false);
+  const [page, setPage] = useState(1);
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
+  const [pages, setPages] = useState();
+
+  let pageSize = 3;
+  // Implemented pagination
+  useEffect(() => {
+    const length = list.length;
+    let totalPages = Math.ceil(length / pageSize);
+    let startValue = (page - 1) * pageSize;
+    let endValue = Math.min(startValue + pageSize - 1, length - 1);
+    setStart(startValue);
+    setEnd(endValue);
+    setPages(totalPages);
+  }, [list, page])
+
+  const handleIncrement = () => {
+    if (page < pages) {
+      setPage(page + 1)
+    }
+  }
+
+  const handleDecrement = () => {
+    if (page !== 1) {
+      setPage(page - 1)
+    }
+  }
 
   // handling refresh button
   const handleRefresh = (e) => {
@@ -35,7 +63,6 @@ function App() {
   // Getting authkey from browser after reload the page to persist the data
   useEffect(() => {
     const getAuthKey = localStorage.getItem('authKey');
-    console.log({ getAuthKey });
     if (getAuthKey) {
       getCommits(getAuthKey);
     }
@@ -50,12 +77,21 @@ function App() {
 
   return (
     <div className="App">
-      <Form authtoken={authtoken} handleSubmit={handleSubmit} handleChange={handleChange}/>
-      <Button handleRefresh={handleRefresh}/>
-      <Counter list={list} authtoken={authtoken || localStorage.getItem('authKey')} getCommits={getCommits} refresh={refresh} />
-      <ListCommits list={list} />
+      <div className='App-box'>
+        <Form authtoken={authtoken} handleSubmit={handleSubmit} handleChange={handleChange} />
+        <Button handleClick={handleRefresh} buttonName="Refresh" disabled={false} className="App-reload" />
+        <Counter list={list} authtoken={authtoken || localStorage.getItem('authKey')} getCommits={getCommits} refresh={refresh} />
+      </div>
+      {list.length ?
+        <>
+          <ListCommits list={list} start={start} end={end} />
+          <Button handleClick={handleDecrement} buttonName="-" disabled={page === 1} />
+          <span>&nbsp; {page} &nbsp;</span>
+          <Button handleClick={handleIncrement} buttonName="+" disabled={page === pages} />
+        </> : null}
     </div>
   );
 }
+
 
 export default App;
